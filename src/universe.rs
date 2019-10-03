@@ -20,7 +20,7 @@ impl fmt::Display for Cell {
     }
 }
 
-type Neighborhood<'a> = (&'a Cell, &'a Cell, &'a Cell);
+pub type Neighborhood<'a> = (&'a Cell, &'a Cell, &'a Cell);
 
 pub struct Universe(Vec<Cell>);
 
