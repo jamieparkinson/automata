@@ -1,0 +1,15 @@
+{
+  "name": "automata",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Cellular automata using Rust/WASM",
+  "scripts": {
+    "build": "parcel build src/index.html",
+    "start": "parcel src/index.html --no-cache"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-wasm-pack": "^4.1.2",
+    "typescript": "^3.6.3"
+  }
+}
