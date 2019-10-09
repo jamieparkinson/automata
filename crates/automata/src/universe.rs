@@ -2,6 +2,7 @@ use rand::prelude::*;
 use std::fmt;
 use std::ops::Index;
 
+#[repr(u8)]
 pub enum Cell {
     Dead,
     Alive,
@@ -34,6 +35,13 @@ impl Index<i32> for Universe {
     }
 }
 
+impl fmt::Display for Universe {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let strings: Vec<String> = self.0.iter().map(|cell| format!("{}", &cell)).collect();
+        write!(f, "{}", strings.join(" "))
+    }
+}
+
 impl Universe {
     pub fn create_random(size: usize) -> Self {
         let vec: Vec<Cell> = (0..size)
@@ -45,9 +53,8 @@ impl Universe {
         Universe(vec)
     }
 
-    pub fn display(&self) -> () {
-        let strings: Vec<String> = self.0.iter().map(|cell| format!("{}", &cell)).collect();
-        println!("{}", strings.join(" "));
+    pub fn get_ptr(&self) -> *const Cell {
+        self.0.as_ptr()
     }
 
     pub fn next_cells<F>(&self, f: F) -> Self

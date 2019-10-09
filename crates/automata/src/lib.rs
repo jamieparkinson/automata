@@ -5,7 +5,6 @@ mod universe;
 
 use universe::*;
 use wasm_bindgen::prelude::*;
-use web_sys::console;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -35,17 +34,27 @@ fn make_rule(decimal: u8) -> impl Fn(Neighborhood) -> Cell {
     }
 }
 
-fn old_main() {
-    let mut universe: Universe = Universe::create_random(100);
-    let rule_110 = &make_rule(15);
-    for _ in 0..1000 {
-        universe.display();
-        universe = universe.next_cells(rule_110);
-    }
+#[wasm_bindgen]
+struct UniverseRenderer {
+    universe: Universe,
+    rule: u8,
 }
 
 #[wasm_bindgen]
-pub fn hello() {
-    set_panic_hook();
-    console::log_1(&JsValue::from_str("hello world!"))
+impl UniverseRenderer {
+    #[wasm_bindgen(constructor)]
+    pub fn new(size: usize, rule: u8) -> Self {
+        UniverseRenderer {
+            universe: Universe::create_random(size),
+            rule,
+        }
+    }
+
+    pub fn cells_ptr(&self) -> *const Cell {
+        self.universe.get_ptr()
+    }
+
+    pub fn tick(&mut self) -> () {
+        self.universe = self.universe.next_cells(make_rule(self.rule))
+    }
 }
