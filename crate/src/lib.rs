@@ -34,16 +34,16 @@ fn make_rule(decimal: u8) -> impl Fn(Neighborhood) -> Cell {
 }
 
 #[wasm_bindgen]
-struct UniverseRenderer {
+struct AutomataUniverse {
     universe: Universe,
     rule: u8,
 }
 
 #[wasm_bindgen]
-impl UniverseRenderer {
+impl AutomataUniverse {
     #[wasm_bindgen(constructor)]
     pub fn new(size: usize, rule: u8) -> Self {
-        UniverseRenderer {
+        AutomataUniverse {
             universe: Universe::create_random(size),
             rule,
         }
