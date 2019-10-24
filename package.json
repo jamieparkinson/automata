@@ -5,11 +5,16 @@
   "description": "Cellular automata using Rust/WASM",
   "scripts": {
     "build": "rimraf dist pkg && webpack",
-    "start": "rimraf dist pkg && webpack-dev-server --open -d"
+    "start": "rimraf dist pkg && webpack-dev-server --open -d",
+    "deploy": "yarn build && gh-pages -d dist"
   },
   "devDependencies": {
     "@wasm-tool/wasm-pack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^5.0.4",
+    "gh-pages": "^2.1.1",
+    "husky": "^3.0.9",
+    "prettier": "1.18.2",
+    "pretty-quick": "^2.0.0",
     "rimraf": "^3.0.0",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.3",
@@ -17,5 +22,10 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.9.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }

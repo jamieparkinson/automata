@@ -34,7 +34,7 @@ fn make_rule(decimal: u8) -> impl Fn(Neighborhood) -> Cell {
 }
 
 #[wasm_bindgen]
-struct AutomataUniverse {
+pub struct AutomataUniverse {
     universe: Universe,
     rule: u8,
 }

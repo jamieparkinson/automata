@@ -11,15 +11,18 @@ export const getUniverseConstraints = (): UniverseConstraints => {
   return {
     size: Math.ceil(innerWidth / CELL_WIDTH),
     iterations: Math.floor(innerHeight / CELL_WIDTH)
-  }
+  };
 };
 
 interface Renderer {
-  render: (cellsRGBA: Uint8Array) => void;
+  addGeneration: (cells: Uint8Array) => void;
+  fillViewport: (allCells: Uint8Array) => void;
 }
 
-const toRGBA = (binary: Uint8Array) => new Uint8Array(binary.length * RGBA_CHANNELS)
-  .map((_, i) => i % 4 === 3 ? 0xFF : 0xFF * binary[Math.floor(i / RGBA_CHANNELS)]);
+const toRGBA = (binary: Uint8Array) =>
+  new Uint8Array(binary.length * RGBA_CHANNELS).map((_, i) =>
+    i % 4 === 3 ? 0xff : 0xff * binary[Math.floor(i / RGBA_CHANNELS)]
+  );
 
 export const createRenderer = (constraints: UniverseConstraints): Renderer => {
   const canvas = document.getElementById("universe") as HTMLCanvasElement;
@@ -27,24 +30,35 @@ export const createRenderer = (constraints: UniverseConstraints): Renderer => {
   canvas.width = constraints.size;
   canvas.height = constraints.iterations;
 
-  let drawAtRow = 0;
-  let imageArray = new Uint8ClampedArray(constraints.size * constraints.iterations * RGBA_CHANNELS).fill(0xFF);
+  let imageArray = new Uint8ClampedArray(
+    constraints.size * constraints.iterations * RGBA_CHANNELS
+  ).fill(0xff);
 
   const shiftIn = (arr: Uint8Array) => {
-    imageArray.set(toRGBA(arr), constraints.size * drawAtRow * RGBA_CHANNELS);
-    if (drawAtRow === constraints.iterations - 1) {
-      imageArray.copyWithin(0, constraints.size * RGBA_CHANNELS);
-    }
+    imageArray.set(
+      arr,
+      constraints.size * (constraints.iterations - 1) * RGBA_CHANNELS
+    );
+    imageArray.copyWithin(0, constraints.size * RGBA_CHANNELS);
+  };
+
+  const renderImageArray = () => {
+    const imageData = new ImageData(
+      imageArray,
+      constraints.size,
+      constraints.iterations
+    );
+    ctx.putImageData(imageData, 0, 0);
   };
 
   return {
-    render: (arr) => {
-      shiftIn(arr);
-      const imageData = new ImageData(imageArray, constraints.size, constraints.iterations);
-      ctx.putImageData(imageData, 0, 0);
-      if (drawAtRow < constraints.iterations - 1) {
-        drawAtRow++;
-      }
+    addGeneration: arr => {
+      shiftIn(toRGBA(arr));
+      renderImageArray();
+    },
+    fillViewport: arr => {
+      imageArray = new Uint8ClampedArray(toRGBA(arr));
+      renderImageArray();
     }
-  }
+  };
 };
