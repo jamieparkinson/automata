@@ -1,9 +1,13 @@
-import {UniverseRenderer} from "../crates/automata/Cargo.toml";
+async function main() {
+  const { UniverseRenderer } = await import("../crate/pkg/index");
+  const { memory } = await import("../crate/pkg/index_bg");
 
-console.log(UniverseRenderer);
-// const universe = new UniverseRenderer(100, 110);
-// console.log(wasm);
-// for (let i = 0; i < 10; i++) {
-//     universe.tick();
-//     console.log(universe.cells_ptr());
-// }
+  const universe = new UniverseRenderer(10, 110);
+  for (let i = 0; i < 10; i++) {
+    const cells = new Uint8Array(memory.buffer, universe.cells_ptr(), 10);
+    console.log(cells.join(" "));
+    universe.tick();
+  }
+}
+
+main();

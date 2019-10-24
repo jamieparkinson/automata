@@ -1,7 +1,0 @@
-[workspace]
-members = [
-    "crates/automata"
-]
-
-[profile.release]
-opt-level = "s"

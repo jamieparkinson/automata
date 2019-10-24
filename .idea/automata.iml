@@ -2,13 +2,17 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/crates/automata/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crate/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/benches" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/crates/automata/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/automata/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/crates/automata/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crate/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crate/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/crate/benches" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/crate/target" />
       <excludeFolder url="file://$MODULE_DIR$/crates/automata/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

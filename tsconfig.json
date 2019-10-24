@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "esnext", // needed to have dynamic imports
+    "lib": [
+      "dom",
+      "es2015"
+    ]
+  },
+  "include": [
+    "./src/*.ts"
+  ]
+}

@@ -1,5 +1,4 @@
 extern crate wasm_bindgen;
-extern crate web_sys;
 
 mod universe;
 

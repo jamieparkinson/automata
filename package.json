@@ -4,14 +4,18 @@
   "license": "MIT",
   "description": "Cellular automata using Rust/WASM",
   "scripts": {
-    "build": "parcel build src/index.html",
-    "start": "parcel src/index.html --no-cache"
+    "build": "rimraf dist pkg && webpack",
+    "start": "rimraf dist pkg && webpack-dev-server --open -d"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.3",
-    "typescript": "^3.6.3"
+    "@wasm-tool/wasm-pack-plugin": "^1.0.1",
+    "copy-webpack-plugin": "^5.0.4",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0"
   },
-  "dependencies": {
-    "parcel-plugin-wasm.rs": "^1.2.15"
-  }
+  "dependencies": {}
 }
