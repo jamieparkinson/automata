@@ -1,6 +1,6 @@
 import { getUniverseConstraints, createRenderer } from "./renderer";
 
-const TICK_PERIOD_MS = 100;
+const TICK_PERIOD_MS = 25;
 
 async function main() {
   const { AutomataUniverse } = await import("../crate/pkg/index");
@@ -10,11 +10,14 @@ async function main() {
   const universe = new AutomataUniverse(constraints.size, 110);
   const renderer = createRenderer(constraints);
 
-  setInterval(() => {
+  const tick = () => {
     const cells = new Uint8Array(memory.buffer, universe.cells_ptr(), constraints.size);
     renderer.render(cells);
     universe.tick();
-  }, TICK_PERIOD_MS);
+    setTimeout(tick, TICK_PERIOD_MS);
+  };
+
+  tick();
 }
 
 main();

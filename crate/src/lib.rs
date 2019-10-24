@@ -43,6 +43,7 @@ struct AutomataUniverse {
 impl AutomataUniverse {
     #[wasm_bindgen(constructor)]
     pub fn new(size: usize, rule: u8) -> Self {
+        set_panic_hook();
         AutomataUniverse {
             universe: Universe::create_random(size),
             rule,
