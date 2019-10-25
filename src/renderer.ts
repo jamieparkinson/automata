@@ -1,4 +1,3 @@
-const CELL_WIDTH = 2;
 const RGBA_CHANNELS = 4;
 
 interface UniverseConstraints {
@@ -6,11 +5,13 @@ interface UniverseConstraints {
   iterations: number;
 }
 
-export const getUniverseConstraints = (): UniverseConstraints => {
+export const getUniverseConstraints = (
+  cellWidth: number
+): UniverseConstraints => {
   const { innerWidth, innerHeight } = window;
   return {
-    size: Math.ceil(innerWidth / CELL_WIDTH),
-    iterations: Math.floor(innerHeight / CELL_WIDTH)
+    size: Math.ceil(innerWidth / cellWidth),
+    iterations: Math.floor(innerHeight / cellWidth)
   };
 };
 
@@ -24,8 +25,10 @@ const toRGBA = (binary: Uint8Array) =>
     i % 4 === 3 ? 0xff : 0xff * binary[Math.floor(i / RGBA_CHANNELS)]
   );
 
-export const createRenderer = (constraints: UniverseConstraints): Renderer => {
-  const canvas = document.getElementById("universe") as HTMLCanvasElement;
+export const createRenderer = (
+  canvas: HTMLCanvasElement,
+  constraints: UniverseConstraints
+): Renderer => {
   const ctx = canvas.getContext("2d");
   canvas.width = constraints.size;
   canvas.height = constraints.iterations;

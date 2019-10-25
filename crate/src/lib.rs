@@ -54,6 +54,13 @@ impl AutomataUniverse {
         self.universe.get_ptr()
     }
 
+    pub fn perturb_cell(&mut self, index: i32) -> () {
+        self.universe[index] = match self.universe[index] {
+            Cell::Alive => Cell::Dead,
+            Cell::Dead => Cell::Alive,
+        }
+    }
+
     pub fn tick(&mut self) -> () {
         self.universe = self.universe.next_cells(make_rule(self.rule))
     }

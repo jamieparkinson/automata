@@ -1,6 +1,6 @@
 use rand::prelude::*;
 use std::fmt;
-use std::ops::Index;
+use std::ops::{Index, IndexMut};
 
 #[repr(u8)]
 pub enum Cell {
@@ -32,6 +32,14 @@ impl Index<i32> for Universe {
         let vec = &self.0;
         let size = vec.len() as i32;
         &vec[((i as i32 + size) % size) as usize]
+    }
+}
+
+impl IndexMut<i32> for Universe {
+    fn index_mut(&mut self, i: i32) -> &mut Self::Output {
+        let vec = &mut self.0;
+        let size = vec.len() as i32;
+        &mut vec[((i as i32 + size) % size) as usize]
     }
 }
 
