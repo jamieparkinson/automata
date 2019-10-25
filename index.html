@@ -1,26 +1,144 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Automata</title>
+
+    <link
+      href="https://unpkg.com/nes.css@2.2.1/css/nes.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas#universe {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        image-rendering: pixelated;
+      }
+
+      @-moz-document url-prefix() {
+        canvas#universe {
+          image-rendering: crisp-edges;
+        }
+      }
+
+      .controls {
+        transform: scale(0.9);
+        min-width: 400px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: white;
+        filter: drop-shadow(-2px 2px 4px rgba(0, 0, 0, 0.45));
+        font-family: "Press Start 2P", monospace;
+        padding: 18px 20px 20px 15px !important;
+      }
+
+      .controls__heading {
+        margin-bottom: 15px;
+      }
+
+      .controls__rule-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+
+      .controls__rule-select label {
+        white-space: nowrap;
+        margin-bottom: 0;
+        margin-right: 5px;
+      }
+
+      .controls__rule-select div {
+        width: 180px;
+      }
+
+      .controls__rule-select div select {
+        padding: 2px;
+      }
+
+      .controls__slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+
+      .controls__slider input[type="range"] {
+        width: 180px;
+      }
+
+      .controls__button {
+        width: 100%;
+      }
+
+      @media screen and (max-width: 414px) {
+        .controls {
+          top: 0;
+          right: 0;
+          left: 0;
+          transform: none;
+          margin: 6px !important;
+          min-width: initial;
+          font-size: 0.9rem;
+          padding: 10px !important;
         }
 
-        canvas#universe {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            image-rendering: pixelated;
+        .controls__heading {
+          margin-bottom: 9px;
         }
+
+        .controls__rule-select {
+          padding: 2px 0;
+        }
+
+        .controls__slider {
+          padding: 2px 0;
+        }
+
+        .controls__button {
+          width: 97%;
+        }
+      }
     </style>
-</head>
-<body>
-<canvas id="universe"></canvas>
-<script src="index.js"></script>
-</body>
+    <link rel="stylesheet" type="text/css" href="nes-track.css" />
+  </head>
+  <body>
+    <div class="controls nes-container is-rounded">
+      <h4 class="controls__heading">Cellular automata</h4>
+
+      <div class="controls__rule-select">
+        <label for="rule_select">Rule #</label>
+        <div class="nes-select">
+          <select required id="rule_select"> </select>
+        </div>
+      </div>
+
+      <div class="controls__slider">
+        <label for="speed_range">Speed</label>
+        <input type="range" id="speed_range" class="nes-range" />
+      </div>
+
+      <button type="button" class="controls__button nes-btn" id="randomize_btn">
+        Randomise
+      </button>
+    </div>
+    <canvas id="universe"></canvas>
+    <script src="index.js"></script>
+  </body>
 </html>
