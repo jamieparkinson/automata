@@ -32,6 +32,7 @@ export const createRenderer = (
   const ctx = canvas.getContext("2d");
   canvas.width = constraints.size;
   canvas.height = constraints.iterations;
+  ctx.imageSmoothingEnabled = false;
 
   let imageArray = new Uint8ClampedArray(
     constraints.size * constraints.iterations * RGBA_CHANNELS
