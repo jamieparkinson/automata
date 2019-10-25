@@ -11,6 +11,9 @@ const CELL_WIDTH = 2;
 const canvas = document.getElementById("universe") as HTMLCanvasElement;
 const ruleSelect = document.getElementById("rule_select") as HTMLSelectElement;
 const speedRange = document.getElementById("speed_range") as HTMLInputElement;
+const randomizeButton = document.getElementById(
+  "randomize_btn"
+) as HTMLButtonElement;
 const constraints = getUniverseConstraints(CELL_WIDTH);
 const renderer = createRenderer(canvas, constraints);
 const state = createStateReducer({
@@ -63,6 +66,9 @@ async function main() {
   ruleSelect.addEventListener("change", (e: Event) => {
     const newRule = parseInt((e.currentTarget as HTMLSelectElement).value, 10);
     universe.change_rule(newRule);
+  });
+  randomizeButton.addEventListener("click", () => {
+    universe.randomize();
   });
 
   const tick = () => {

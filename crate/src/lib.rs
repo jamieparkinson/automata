@@ -61,6 +61,10 @@ impl AutomataUniverse {
         }
     }
 
+    pub fn randomize(&mut self) -> () {
+        self.universe = Universe::create_random(self.universe.get_size())
+    }
+
     pub fn change_rule(&mut self, rule: u8) -> () {
         self.rule = rule;
     }

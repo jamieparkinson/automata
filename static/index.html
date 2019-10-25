@@ -38,7 +38,7 @@
         background-color: white;
         filter: drop-shadow(-2px 2px 4px rgba(0, 0, 0, 0.45));
         font-family: "Press Start 2P", monospace;
-        padding: 18px 20px 0 15px !important;
+        padding: 18px 20px 20px 15px !important;
       }
 
       .controls__heading {
@@ -75,6 +75,10 @@
 
       .controls__slider input[type="range"] {
         width: 180px;
+      }
+
+      .controls__button {
+        width: 100%;
       }
 
       .nes-range {
@@ -126,6 +130,10 @@
         <label for="speed_range">Speed</label>
         <input type="range" id="speed_range" class="nes-range" />
       </div>
+
+      <button type="button" class="controls__button nes-btn" id="randomize_btn">
+        Randomise
+      </button>
     </div>
     <canvas id="universe"></canvas>
     <script src="index.js"></script>

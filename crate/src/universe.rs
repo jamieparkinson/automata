@@ -65,6 +65,10 @@ impl Universe {
         self.0.as_ptr()
     }
 
+    pub fn get_size(&self) -> usize {
+        self.0.len()
+    }
+
     pub fn next_cells<F>(&self, f: F) -> Self
     where
         F: Fn(Neighborhood) -> Cell,
