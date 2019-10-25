@@ -7,6 +7,7 @@ import {
 } from "./utils";
 
 const CELL_WIDTH = 2;
+const FUN_RULES = [110, 30, 106, 45, 126, 22, 105, 142];
 
 const canvas = document.getElementById("universe") as HTMLCanvasElement;
 const ruleSelect = document.getElementById("rule_select") as HTMLSelectElement;
@@ -18,10 +19,10 @@ const constraints = getUniverseConstraints(CELL_WIDTH);
 const renderer = createRenderer(canvas, constraints);
 const state = createStateReducer({
   tickPeriod: 25,
-  rule: 110
+  rule: FUN_RULES[Math.floor(Math.random() * FUN_RULES.length)]
 });
 
-populateRuleSelect(ruleSelect, state.get().rule);
+populateRuleSelect(ruleSelect, state.get().rule, FUN_RULES);
 speedRange.min = "0";
 speedRange.max = "60";
 speedRange.value = "35";

@@ -93,12 +93,16 @@ const obtainUniqueRules = () => {
 
 export const populateRuleSelect = (
   el: HTMLSelectElement,
-  initialRule: number
+  initialRule: number,
+  starredRules: number[]
 ) => {
   obtainUniqueRules().forEach(rule => {
     const opt = document.createElement("option");
     opt.value = rule.toString(10);
     opt.text = rule.toString(10);
+    if (starredRules.indexOf(rule) !== -1) {
+      opt.text = `*${opt.text}*`;
+    }
     el.appendChild(opt);
   });
   el.value = initialRule.toString(10);
