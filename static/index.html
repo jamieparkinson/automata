@@ -1,26 +1,133 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Automata</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-        }
 
-        canvas#universe {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            image-rendering: pixelated;
-        }
+    <link
+      href="https://unpkg.com/nes.css@2.2.1/css/nes.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      canvas#universe {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        image-rendering: pixelated;
+      }
+
+      .controls {
+        transform: scale(0.9);
+        min-width: 400px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: white;
+        filter: drop-shadow(-2px 2px 4px rgba(0, 0, 0, 0.45));
+        font-family: "Press Start 2P", monospace;
+        padding: 18px 20px 0 15px !important;
+      }
+
+      .controls__heading {
+        margin-bottom: 15px;
+      }
+
+      .controls__rule-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+
+      .controls__rule-select label {
+        white-space: nowrap;
+        margin-bottom: 0;
+        margin-right: 5px;
+      }
+
+      .controls__rule-select div {
+        width: 180px;
+      }
+
+      .controls__rule-select div select {
+        padding: 2px;
+      }
+
+      .controls__slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+
+      .controls__slider input[type="range"] {
+        width: 180px;
+      }
+
+      .nes-range {
+        width: 100%;
+        background: transparent;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 24px 0;
+      }
+      .nes-range::-webkit-slider-thumb {
+        width: 16px;
+        height: 28px;
+        background: white;
+        border: 4px solid #212529;
+        -webkit-appearance: none;
+        cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC)
+            14 0,
+          pointer;
+        position: relative;
+        top: -12px;
+      }
+
+      .nes-range::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC)
+            14 0,
+          pointer;
+        background: #212529;
+      }
+      .nes-range:focus {
+        outline: none;
+      }
     </style>
-</head>
-<body>
-<canvas id="universe"></canvas>
-<script src="index.js"></script>
-</body>
+  </head>
+  <body>
+    <div class="controls nes-container is-rounded">
+      <h4 class="controls__heading">Cellular automata</h4>
+
+      <div class="controls__rule-select">
+        <label for="rule_select">Rule #</label>
+        <div class="nes-select">
+          <select required id="rule_select"> </select>
+        </div>
+      </div>
+
+      <div class="controls__slider">
+        <label for="speed_range">Speed</label>
+        <input type="range" id="speed_range" class="nes-range" />
+      </div>
+    </div>
+    <canvas id="universe"></canvas>
+    <script src="index.js"></script>
+  </body>
 </html>

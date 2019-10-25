@@ -61,6 +61,10 @@ impl AutomataUniverse {
         }
     }
 
+    pub fn change_rule(&mut self, rule: u8) -> () {
+        self.rule = rule;
+    }
+
     pub fn tick(&mut self) -> () {
         self.universe = self.universe.next_cells(make_rule(self.rule))
     }

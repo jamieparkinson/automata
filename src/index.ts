@@ -1,12 +1,34 @@
 import { getUniverseConstraints, createRenderer } from "./renderer";
-import { attachMouseDragListener } from "./utils";
+import {
+  attachMouseDragListener,
+  createStateReducer,
+  linterp,
+  populateRuleSelect
+} from "./utils";
 
-const TICK_PERIOD_MS = 25;
 const CELL_WIDTH = 2;
 
 const canvas = document.getElementById("universe") as HTMLCanvasElement;
+const ruleSelect = document.getElementById("rule_select") as HTMLSelectElement;
+const speedRange = document.getElementById("speed_range") as HTMLInputElement;
 const constraints = getUniverseConstraints(CELL_WIDTH);
 const renderer = createRenderer(canvas, constraints);
+const state = createStateReducer({
+  tickPeriod: 25,
+  rule: 110
+});
+
+populateRuleSelect(ruleSelect, state.get().rule);
+speedRange.min = "0";
+speedRange.max = "60";
+speedRange.value = "35";
+const interpolateTickPeriod = linterp({ min: 0, max: 60 }, { min: 60, max: 0 });
+speedRange.addEventListener("change", (e: Event) => {
+  const tickPeriod = interpolateTickPeriod(
+    parseInt((e.currentTarget as HTMLInputElement).value, 10)
+  );
+  state.update(() => ({ tickPeriod }));
+});
 
 const renderInitialCells = (
   universe: import("../crate/pkg/index").AutomataUniverse,
@@ -31,13 +53,17 @@ async function main() {
   const { AutomataUniverse } = await import("../crate/pkg/index");
   const { memory } = await import("../crate/pkg/index_bg");
 
-  const universe = new AutomataUniverse(constraints.size, 110);
+  const universe = new AutomataUniverse(constraints.size, state.get().rule);
   renderInitialCells(universe, memory.buffer);
   attachMouseDragListener(
     canvas,
     CELL_WIDTH,
     universe.perturb_cell.bind(universe)
   );
+  ruleSelect.addEventListener("change", (e: Event) => {
+    const newRule = parseInt((e.currentTarget as HTMLSelectElement).value, 10);
+    universe.change_rule(newRule);
+  });
 
   const tick = () => {
     const cells = new Uint8Array(
@@ -47,7 +73,7 @@ async function main() {
     );
     renderer.addGeneration(cells);
     universe.tick();
-    setTimeout(tick, TICK_PERIOD_MS);
+    setTimeout(tick, state.get().tickPeriod);
   };
   tick();
 }
